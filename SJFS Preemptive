@@ -1,0 +1,47 @@
+processId = ["p1", "p2", "p3", "p4", "p5", "p6"]
+
+arrivetime = [3, 2, 3, 1, 4, 6]
+burst = [1, 4, 6, 3, 2, 1]
+
+n = len(processId)
+
+remaining = burst.copy()
+comtime = [0] * n
+tatime = [0] * n
+waitingtime = [0] * n
+
+time = 0
+done = 0
+
+while done < n:
+
+    shortest = -1
+
+    for i in range(n):
+        if arrivetime[i] <= time and remaining[i] > 0:
+            if shortest == -1 or remaining[i] < remaining[shortest]:
+                shortest = i
+
+    if shortest == -1:
+        time += 1
+        continue
+
+    remaining[shortest] -= 1
+    time += 1
+
+    if remaining[shortest] == 0:
+        comtime[shortest] = time
+        tatime[shortest] = comtime[shortest] - arrivetime[shortest]
+        waitingtime[shortest] = tatime[shortest] - burst[shortest]
+        done += 1
+
+
+print("Waiting Time =", waitingtime)
+print("Completion Time =", comtime)
+print("Turnaround Time =", tatime)
+
+avgtat = sum(tatime) / n
+avgwt = sum(waitingtime) / n
+
+print("Average TAT =", round(avgtat, 2))
+print("Average WT =", round(avgwt, 2))
