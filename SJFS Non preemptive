@@ -1,0 +1,36 @@
+processId = ["p1", "p2", "p3", "p4", "p5", "p6"]
+
+arrivetime = [3, 2, 3, 1, 4, 6]
+
+burst = [1, 4, 6, 3, 2, 1]
+
+time = 0
+
+waitingtime = []
+comtime = []
+tatime = []
+
+for i in range(len(burst)):
+
+    if time < arrivetime[i]:
+        time = arrivetime[i]
+
+    waiting = time - arrivetime[i]
+    waitingtime.append(waiting)
+
+    time = time + burst[i]
+    comtime.append(time)
+
+    tat = time - arrivetime[i]
+    tatime.append(tat)
+
+print("Waiting Time =", waitingtime)
+print("Completion Time =", comtime)
+print("Turnaround Time =", tatime)
+n = len(processId)
+
+avgtat = sum(tatime) / n
+avgwt = sum(waitingtime) / n
+
+print("Average TAT =", round(avgtat, 2))
+print("Average WT =", round(avgwt, 2))
